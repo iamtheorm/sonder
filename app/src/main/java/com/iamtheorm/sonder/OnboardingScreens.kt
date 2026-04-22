@@ -1,3 +1,5 @@
+package com.iamtheorm.sonder
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,10 +33,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun WelcomeScreen(onNavigate: () -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -44,20 +43,13 @@ fun WelcomeScreen(onNavigate: () -> Unit) {
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold
         )
-
         Text(
             text = "A platform that helps students understand themselves.",
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.72f),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center
         )
-
-        Button(
-            onClick = onNavigate,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-        ) {
+        Button(onClick = onNavigate, modifier = Modifier.fillMaxWidth().height(56.dp)) {
             Text(text = "Continue with Google")
         }
     }
@@ -66,10 +58,7 @@ fun WelcomeScreen(onNavigate: () -> Unit) {
 @Composable
 fun RoleSelectionScreen(viewModel: SonderViewModel, onNavigate: () -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -79,19 +68,15 @@ fun RoleSelectionScreen(viewModel: SonderViewModel, onNavigate: () -> Unit) {
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center
         )
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Card(
-                modifier = Modifier
-                    .weight(1f)
-                    .size(160.dp)
-                    .clickable {
-                        viewModel.setUserType(UserRole.SCHOOL)
-                        onNavigate()
-                    },
+                modifier = Modifier.weight(1f).size(160.dp).clickable {
+                    viewModel.setUserType(UserRole.SCHOOL)
+                    onNavigate()
+                },
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
@@ -102,15 +87,11 @@ fun RoleSelectionScreen(viewModel: SonderViewModel, onNavigate: () -> Unit) {
                     Text(text = "School Student", textAlign = TextAlign.Center)
                 }
             }
-
             Card(
-                modifier = Modifier
-                    .weight(1f)
-                    .size(160.dp)
-                    .clickable {
-                        viewModel.setUserType(UserRole.COLLEGE)
-                        onNavigate()
-                    },
+                modifier = Modifier.weight(1f).size(160.dp).clickable {
+                    viewModel.setUserType(UserRole.COLLEGE)
+                    onNavigate()
+                },
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
@@ -135,60 +116,28 @@ fun ProfileSetupScreen(viewModel: SonderViewModel, onNavigate: () -> Unit) {
     val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        OutlinedTextField(fullName, { fullName = it }, label = { Text("Full Name") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(age, { age = it }, label = { Text("Age") }, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(email, { viewModel.setEmail(it) }, label = { Text("Email") }, modifier = Modifier.fillMaxWidth())
         OutlinedTextField(
-            value = fullName,
-            onValueChange = { fullName = it },
-            label = { Text("Full Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = age,
-            onValueChange = { age = it },
-            label = { Text("Age") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = email,
-            onValueChange = { viewModel.setEmail(it) },
-            label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = institutionId,
-            onValueChange = { viewModel.setInstitutionId(it) },
+            institutionId,
+            { viewModel.setInstitutionId(it) },
             label = { Text("Institution ID") },
             modifier = Modifier.fillMaxWidth()
         )
-
         if (errorMessage != null) {
-            Text(
-                text = errorMessage ?: "",
-                color = MaterialTheme.colorScheme.error
-            )
+            Text(text = errorMessage ?: "", color = MaterialTheme.colorScheme.error)
         }
-
         Button(
             onClick = {
                 viewModel.clearError()
-                viewModel.requestOtp(
-                    fullName = fullName,
-                    age = age,
-                    onSuccess = onNavigate
-                )
+                viewModel.requestOtp(fullName = fullName, age = age, onSuccess = onNavigate)
             },
             enabled = !isLoading,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp)
+            modifier = Modifier.fillMaxWidth().padding(top = 12.dp)
         ) {
             if (isLoading) {
                 CircularProgressIndicator(
@@ -213,10 +162,7 @@ fun OtpScreen(viewModel: SonderViewModel, onNavigate: () -> Unit) {
     val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -226,44 +172,19 @@ fun OtpScreen(viewModel: SonderViewModel, onNavigate: () -> Unit) {
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center
         )
-
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            OutlinedTextField(
-                value = otp1,
-                onValueChange = { otp1 = it.take(1) },
-                modifier = Modifier.size(64.dp)
-            )
-            OutlinedTextField(
-                value = otp2,
-                onValueChange = { otp2 = it.take(1) },
-                modifier = Modifier.size(64.dp)
-            )
-            OutlinedTextField(
-                value = otp3,
-                onValueChange = { otp3 = it.take(1) },
-                modifier = Modifier.size(64.dp)
-            )
-            OutlinedTextField(
-                value = otp4,
-                onValueChange = { otp4 = it.take(1) },
-                modifier = Modifier.size(64.dp)
-            )
+            OutlinedTextField(otp1, { otp1 = it.take(1) }, modifier = Modifier.size(64.dp))
+            OutlinedTextField(otp2, { otp2 = it.take(1) }, modifier = Modifier.size(64.dp))
+            OutlinedTextField(otp3, { otp3 = it.take(1) }, modifier = Modifier.size(64.dp))
+            OutlinedTextField(otp4, { otp4 = it.take(1) }, modifier = Modifier.size(64.dp))
         }
-
         if (errorMessage != null) {
-            Text(
-                text = errorMessage ?: "",
-                color = MaterialTheme.colorScheme.error
-            )
+            Text(text = errorMessage ?: "", color = MaterialTheme.colorScheme.error)
         }
-
         Button(
             onClick = {
                 viewModel.clearError()
-                viewModel.verifyOtp(
-                    otp = otp1 + otp2 + otp3 + otp4,
-                    onSuccess = onNavigate
-                )
+                viewModel.verifyOtp(otp = otp1 + otp2 + otp3 + otp4, onSuccess = onNavigate)
             },
             enabled = !isLoading,
             modifier = Modifier.fillMaxWidth()

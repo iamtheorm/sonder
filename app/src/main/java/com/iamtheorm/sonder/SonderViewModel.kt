@@ -1,8 +1,10 @@
+package com.iamtheorm.sonder
+
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -39,24 +41,14 @@ class SonderViewModel(application: Application) : AndroidViewModel(application) 
     private val _isSessionReady = MutableStateFlow(false)
     val isSessionReady: StateFlow<Boolean> = _isSessionReady.asStateFlow()
 
-    private val repository = AuthRepository(
-        sessionManager = SessionManager(application.applicationContext)
-    )
+    private val repository = AuthRepository(sessionManager = SessionManager(application.applicationContext))
 
     init {
         restoreSession()
     }
 
-    fun setLoggedIn(value: Boolean) {
-        _isLoggedIn.value = value
-    }
-
     fun setUserType(value: UserRole) {
         _userType.value = value
-    }
-
-    fun setPremium(value: Boolean) {
-        _isPremium.value = value
     }
 
     fun setInstitutionId(value: String) {
@@ -78,11 +70,7 @@ class SonderViewModel(application: Application) : AndroidViewModel(application) 
         _otpRequestId.value = ""
     }
 
-    fun requestOtp(
-        fullName: String,
-        age: String,
-        onSuccess: () -> Unit
-    ) {
+    fun requestOtp(fullName: String, age: String, onSuccess: () -> Unit) {
         val ageValue = age.toIntOrNull()
         if (_email.value.isBlank()) {
             _errorMessage.value = "Email is required."
@@ -114,7 +102,6 @@ class SonderViewModel(application: Application) : AndroidViewModel(application) 
                     userType = _userType.value
                 )
             )
-
             _isLoading.value = false
             result.onSuccess {
                 _otpRequestId.value = it.otpRequestId
@@ -125,10 +112,7 @@ class SonderViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun verifyOtp(
-        otp: String,
-        onSuccess: () -> Unit
-    ) {
+    fun verifyOtp(otp: String, onSuccess: () -> Unit) {
         if (otp.length != 4) {
             _errorMessage.value = "Enter the 4-digit OTP."
             return
@@ -143,12 +127,8 @@ class SonderViewModel(application: Application) : AndroidViewModel(application) 
 
         viewModelScope.launch {
             val result = repository.verifyOtp(
-                OtpVerifyPayload(
-                    otpRequestId = _otpRequestId.value,
-                    otp = otp
-                )
+                OtpVerifyPayload(otpRequestId = _otpRequestId.value, otp = otp)
             )
-
             _isLoading.value = false
             result.onSuccess {
                 if (it.accessToken.isNotBlank()) {

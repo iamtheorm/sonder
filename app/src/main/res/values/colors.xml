@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sonder_blue">#2F2FE4</color>
+    <color name="sonder_blue_deep">#162E93</color>
+    <color name="sonder_indigo">#1A1953</color>
+    <color name="sonder_night">#080616</color>
+
+    <color name="sonder_surface_light">#FFFFFF</color>
+    <color name="sonder_background_light">#F6F7FF</color>
+    <color name="sonder_on_light">#080616</color>
+</resources>

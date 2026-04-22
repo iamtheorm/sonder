@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:gravity="center">
+        <vector
+            android:width="120dp"
+            android:height="120dp"
+            android:viewportWidth="108"
+            android:viewportHeight="108">
+            <path
+                android:fillColor="@color/sonder_blue"
+                android:pathData="M54,12A42,42 0,1 1,12 54A42,42 0,0 1,54 12Z" />
+            <path
+                android:fillColor="@color/sonder_blue_deep"
+                android:pathData="M54,24A30,30 0,1 1,24 54A30,30 0,0 1,54 24Z" />
+            <path
+                android:fillColor="@color/sonder_surface_light"
+                android:pathData="M39,42C39,35.37 44.37,30 51,30H65V38H51C48.79,38 47,39.79 47,42C47,44.21 48.79,46 51,46H57C63.63,46 69,51.37 69,58C69,64.63 63.63,70 57,70H43V62H57C59.21,62 61,60.21 61,58C61,55.79 59.21,54 57,54H51C44.37,54 39,48.63 39,42Z" />
+        </vector>
+    </item>
+</layer-list>

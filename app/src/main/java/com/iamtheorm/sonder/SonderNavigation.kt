@@ -1,3 +1,5 @@
+package com.iamtheorm.sonder
+
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -17,36 +19,22 @@ fun SonderNavigation(
     viewModel: SonderViewModel,
     startDestination: String
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = startDestination
-    ) {
+    NavHost(navController = navController, startDestination = startDestination) {
         composable(SonderRoutes.WELCOME) {
-            WelcomeScreen(
-                onNavigate = {
-                    navController.navigate(SonderRoutes.ROLE_SELECTION)
-                }
-            )
+            WelcomeScreen(onNavigate = { navController.navigate(SonderRoutes.ROLE_SELECTION) })
         }
-
         composable(SonderRoutes.ROLE_SELECTION) {
             RoleSelectionScreen(
                 viewModel = viewModel,
-                onNavigate = {
-                    navController.navigate(SonderRoutes.PROFILE_SETUP)
-                }
+                onNavigate = { navController.navigate(SonderRoutes.PROFILE_SETUP) }
             )
         }
-
         composable(SonderRoutes.PROFILE_SETUP) {
             ProfileSetupScreen(
                 viewModel = viewModel,
-                onNavigate = {
-                    navController.navigate(SonderRoutes.OTP)
-                }
+                onNavigate = { navController.navigate(SonderRoutes.OTP) }
             )
         }
-
         composable(SonderRoutes.OTP) {
             OtpScreen(
                 viewModel = viewModel,
@@ -57,7 +45,6 @@ fun SonderNavigation(
                 }
             )
         }
-
         composable(SonderRoutes.HOME) {
             HomeScreen(viewModel = viewModel)
         }
